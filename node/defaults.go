@@ -28,12 +28,14 @@ import (
 )
 
 const (
-	DefaultHTTPHost = "localhost" // Default host interface for the HTTP RPC server
-	DefaultHTTPPort = 8545        // Default TCP port for the HTTP RPC server
-	DefaultWSHost   = "localhost" // Default host interface for the websocket RPC server
-	DefaultWSPort   = 8546        // Default TCP port for the websocket RPC server
-	DefaultAuthHost = "localhost" // Default host interface for the authenticated apis
-	DefaultAuthPort = 8551        // Default port for the authenticated apis
+	DefaultHTTPHost  = "localhost" // Default host interface for the HTTP RPC server
+	DefaultHTTPPort  = 8545        // Default TCP port for the HTTP RPC server
+	DefaultWSHost    = "localhost" // Default host interface for the websocket RPC server
+	DefaultWSPort    = 8546        // Default TCP port for the websocket RPC server
+	DefaultAuthHost  = "localhost" // Default host interface for the authenticated apis
+	DefaultAuthPort  = 8551        // Default port for the authenticated apis
+	DefaultRedisHost = "localhost" // Default host interface for the redis server
+	DefaultRedisPort = 6379        // Default TCP port for the redis server
 )
 
 var (
@@ -56,6 +58,8 @@ var DefaultConfig = Config{
 	HTTPTimeouts:         rpc.DefaultHTTPTimeouts,
 	WSPort:               DefaultWSPort,
 	WSModules:            []string{"net", "web3"},
+	RedisHost:            DefaultRedisHost,
+	RedisPort:            DefaultRedisPort,
 	BatchRequestLimit:    1000,
 	BatchResponseMaxSize: 25 * 1000 * 1000,
 	GraphQLVirtualHosts:  []string{"localhost"},

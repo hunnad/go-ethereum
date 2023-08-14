@@ -63,6 +63,7 @@ type Node struct {
 	wsAuth        *httpServer //
 	ipc           *ipcServer  // Stores information about the ipc http server
 	inprocHandler *rpc.Server // In-process RPC request handler to process the API requests
+	redisClient   *RedisClient
 
 	databases map[*closeTrackingDB]struct{} // All open databases
 }
@@ -153,6 +154,7 @@ func New(conf *Config) (*Node, error) {
 	node.ws = newHTTPServer(node.log, rpc.DefaultHTTPTimeouts)
 	node.wsAuth = newHTTPServer(node.log, rpc.DefaultHTTPTimeouts)
 	node.ipc = newIPCServer(node.log, conf.IPCEndpoint())
+	node.redisClient = newRedisClient(conf.RedisHost, conf.RedisPort, conf.RedisPassword)
 
 	return node, nil
 }
@@ -670,6 +672,10 @@ func (n *Node) AccountManager() *accounts.Manager {
 // IPCEndpoint retrieves the current IPC endpoint used by the protocol stack.
 func (n *Node) IPCEndpoint() string {
 	return n.ipc.endpoint
+}
+
+func (n *Node) RedisClient() *RedisClient {
+	return n.redisClient
 }
 
 // HTTPEndpoint returns the URL of the HTTP server. Note that this URL does not

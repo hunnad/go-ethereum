@@ -73,9 +73,11 @@ func (h *ethHandler) Handle(peer *eth.Peer, packet eth.Packet) error {
 		return h.txFetcher.Notify(peer.ID(), packet.Hashes)
 
 	case *eth.TransactionsPacket:
+		h.redisClient.SendPendingTransactions(*packet)
 		return h.txFetcher.Enqueue(peer.ID(), *packet, false)
 
 	case *eth.PooledTransactionsPacket:
+		h.redisClient.SendPendingTransactions(*packet)
 		return h.txFetcher.Enqueue(peer.ID(), *packet, true)
 
 	default:

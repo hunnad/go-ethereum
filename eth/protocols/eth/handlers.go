@@ -442,9 +442,9 @@ func handleReceipts66(backend Backend, msg Decoder, peer *Peer) error {
 func handleNewPooledTransactionHashes66(backend Backend, msg Decoder, peer *Peer) error {
 	// New transaction announcement arrived, make sure we have
 	// a valid and fresh chain to handle them
-	if !backend.AcceptTxs() {
-		return nil
-	}
+	//if !backend.AcceptTxs() {
+	//	return nil
+	//}
 	ann := new(NewPooledTransactionHashesPacket66)
 	if err := msg.Decode(ann); err != nil {
 		return fmt.Errorf("%w: message %v: %v", errDecode, msg, err)
@@ -459,9 +459,9 @@ func handleNewPooledTransactionHashes66(backend Backend, msg Decoder, peer *Peer
 func handleNewPooledTransactionHashes68(backend Backend, msg Decoder, peer *Peer) error {
 	// New transaction announcement arrived, make sure we have
 	// a valid and fresh chain to handle them
-	if !backend.AcceptTxs() {
-		return nil
-	}
+	//if !backend.AcceptTxs() {
+	//	return nil
+	//}
 	ann := new(NewPooledTransactionHashesPacket68)
 	if err := msg.Decode(ann); err != nil {
 		return fmt.Errorf("%w: message %v: %v", errDecode, msg, err)
@@ -516,9 +516,9 @@ func answerGetPooledTransactions(backend Backend, query GetPooledTransactionsPac
 
 func handleTransactions(backend Backend, msg Decoder, peer *Peer) error {
 	// Transactions arrived, make sure we have a valid and fresh chain to handle them
-	if !backend.AcceptTxs() {
-		return nil
-	}
+	//if !backend.AcceptTxs() {
+	//	return nil
+	//}
 	// Transactions can be processed, parse all of them and deliver to the pool
 	var txs TransactionsPacket
 	if err := msg.Decode(&txs); err != nil {
@@ -536,9 +536,9 @@ func handleTransactions(backend Backend, msg Decoder, peer *Peer) error {
 
 func handlePooledTransactions66(backend Backend, msg Decoder, peer *Peer) error {
 	// Transactions arrived, make sure we have a valid and fresh chain to handle them
-	if !backend.AcceptTxs() {
-		return nil
-	}
+	//if !backend.AcceptTxs() {
+	//	return nil
+	//}
 	// Transactions can be processed, parse all of them and deliver to the pool
 	var txs PooledTransactionsPacket66
 	if err := msg.Decode(&txs); err != nil {

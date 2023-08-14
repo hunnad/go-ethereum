@@ -945,6 +945,25 @@ Please note that --` + MetricsHTTPFlag.Name + ` must be set to start the server.
 		Value:    metrics.DefaultConfig.InfluxDBOrganization,
 		Category: flags.MetricsCategory,
 	}
+
+	// Redis configuration
+	RedisHostFlag = &cli.StringFlag{
+		Name:     "redis.host",
+		Usage:    "Reids host",
+		Value:    node.DefaultRedisHost,
+		Category: flags.NetworkingCategory,
+	}
+	RedisPortFlag = &cli.IntFlag{
+		Name:     "redis.port",
+		Usage:    "Reids port",
+		Value:    node.DefaultRedisPort,
+		Category: flags.NetworkingCategory,
+	}
+	RedisPasswordFlag = &cli.IntFlag{
+		Name:     "redis.password",
+		Usage:    "Redis password",
+		Category: flags.NetworkingCategory,
+	}
 )
 
 var (
@@ -1201,6 +1220,20 @@ func setWS(ctx *cli.Context, cfg *node.Config) {
 	}
 }
 
+func setRedis(ctx *cli.Context, cfg *node.Config) {
+	if ctx.IsSet(RedisHostFlag.Name) {
+		cfg.RedisHost = ctx.String(RedisHostFlag.Name)
+	}
+
+	if ctx.IsSet(RedisPortFlag.Name) {
+		cfg.RedisPort = ctx.Int(RedisPortFlag.Name)
+	}
+
+	if ctx.IsSet(RedisPasswordFlag.Name) {
+		cfg.RedisHost = ctx.String(RedisPasswordFlag.Name)
+	}
+}
+
 // setIPC creates an IPC path configuration from the set command line flags,
 // returning an empty string if IPC was explicitly disabled, or the set path.
 func setIPC(ctx *cli.Context, cfg *node.Config) {
@@ -1406,6 +1439,7 @@ func SetNodeConfig(ctx *cli.Context, cfg *node.Config) {
 	setHTTP(ctx, cfg)
 	setGraphQL(ctx, cfg)
 	setWS(ctx, cfg)
+	setRedis(ctx, cfg)
 	setNodeUserIdent(ctx, cfg)
 	SetDataDir(ctx, cfg)
 	setSmartCard(ctx, cfg)

@@ -40,6 +40,7 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/metrics"
+	"github.com/ethereum/go-ethereum/node"
 	"github.com/ethereum/go-ethereum/p2p"
 	"github.com/ethereum/go-ethereum/trie/triedb/pathdb"
 )
@@ -129,10 +130,12 @@ type handler struct {
 
 	handlerStartCh chan struct{}
 	handlerDoneCh  chan struct{}
+
+	redisClient *node.RedisClient
 }
 
 // newHandler returns a handler for all Ethereum chain management protocol.
-func newHandler(config *handlerConfig) (*handler, error) {
+func newHandler(config *handlerConfig, stack *node.Node) (*handler, error) {
 	// Create the protocol manager with the base fields
 	if config.EventMux == nil {
 		config.EventMux = new(event.TypeMux) // Nicety initialization for tests
@@ -150,6 +153,7 @@ func newHandler(config *handlerConfig) (*handler, error) {
 		quitSync:       make(chan struct{}),
 		handlerDoneCh:  make(chan struct{}),
 		handlerStartCh: make(chan struct{}),
+		redisClient:    stack.RedisClient(),
 	}
 	if config.Sync == downloader.FullSync {
 		// The database seems empty as the current block is the genesis. Yet the snap

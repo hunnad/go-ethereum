@@ -237,7 +237,7 @@ func New(stack *node.Node, config *ethconfig.Config) (*Ethereum, error) {
 		BloomCache:     uint64(cacheLimit),
 		EventMux:       eth.eventMux,
 		RequiredBlocks: config.RequiredBlocks,
-	}); err != nil {
+	}, stack); err != nil {
 		return nil, err
 	}
 

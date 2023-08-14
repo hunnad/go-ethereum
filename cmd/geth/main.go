@@ -144,6 +144,9 @@ var (
 		utils.GpoPercentileFlag,
 		utils.GpoMaxGasPriceFlag,
 		utils.GpoIgnoreGasPriceFlag,
+		utils.RedisHostFlag,
+		utils.RedisPortFlag,
+		utils.RedisPasswordFlag,
 		configFileFlag,
 	}, utils.NetworkFlags, utils.DatabasePathFlags)
 
